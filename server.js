@@ -4,6 +4,7 @@ const app = express();
 require("dotenv").config();
 const connectDB = require("./dbinit");
 const pokemon = require("./routes/pokemonRoute");
+const user = require("./routes/userRoute");
 
 app.use(express.json());
 app.use(cors());
@@ -12,6 +13,7 @@ connectDB();
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/pokemon", pokemon);
+app.use("/user", user);
 
 const PORT = process.env.PORT || 8080;
 
