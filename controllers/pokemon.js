@@ -13,9 +13,10 @@ const createOnePokemon = async (req, res) => {
       moves,
       sound,
     });
-    res
-      .status(201)
-      .json({ message: "Pokemon created successfully", data: createdPokemon });
+    res.status(201).json({
+      message: "Pokemon created successfully",
+      data: createdPokemon,
+    });
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -41,7 +42,7 @@ const getAllPokemon = async (req, res) => {
     if (!allPokemon.length) {
       res.status(200).json({ message: "No Pokemon in the DB" });
     } else {
-      res.status(200).json({ data: allPokemon });
+      res.status(200).json({ pokemons: allPokemon });
     }
   } catch (error) {
     res.status(500).json({ error });
