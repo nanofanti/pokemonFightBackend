@@ -12,10 +12,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  nickName: {
+    type: String,
+    required: true,
+  },
 });
 
 //Signup function
-UserSchema.statics.signup = async function (email, password) {
+UserSchema.statics.signup = async function (email, password, nickName) {
   const exists = await this.findOne({ email });
 
   if (exists) {
@@ -39,6 +43,7 @@ UserSchema.statics.signup = async function (email, password) {
   const user = await this.create({
     email,
     password: hash,
+    nickName,
   });
 
   return user;
