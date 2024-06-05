@@ -1,3 +1,4 @@
+const Pokemon = require("../schemas/Pokemon");
 const User = require("../schemas/User");
 const jwt = require("jsonwebtoken");
 
@@ -17,8 +18,9 @@ const signUpUser = async (req, res) => {
       _id: user._id,
       email,
       nickName,
-      // password,
-      // token,
+      password,
+      token,
+      Pokemon: user.userPokemons,
       message: "User created successfully",
     });
   } catch (error) {
@@ -34,12 +36,42 @@ const loginUser = async (req, res) => {
     const user = await User.login(email, password);
     const token = createToken(user._id);
 
-    res
-      .status(200)
-      .json({ _id: user._id, email, token, message: "Login successfull" });
+    res.status(200).json({
+      _id: user._id,
+      email,
+      nickName: user.nickName,
+      token,
+      Pokemon: user.userPokemons,
+      message: "Login successfull",
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-module.exports = { signUpUser, loginUser };
+//Update userPokemons
+const updateUserPokemons = async (req, res) => {
+  try {
+    const { userPokemons } = req.body;
+    const { id } = req.params;
+
+    const user = await User.findByIdAndUpdate(
+      id,
+      { userPokemons },
+      { new: true }
+    );
+    if (!user) {
+      res.status(404).json({ message: "I don't know this user" });
+    } else {
+      res
+        .status(200)
+        .json({ message: "User updated successfully", data: user });
+    }
+  } catch (error) {
+    res.status(500).json({
+      error,
+    });
+  }
+};
+
+module.exports = { signUpUser, loginUser, updateUserPokemons };
