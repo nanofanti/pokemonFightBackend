@@ -21,6 +21,7 @@ const PokemonSchema = new mongoose.Schema({
   sound: {
     type: String,
   },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
 module.exports = mongoose.model("Pokemon", PokemonSchema);

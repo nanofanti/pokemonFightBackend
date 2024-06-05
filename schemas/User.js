@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  userPokemons: [{ type: String }],
+  userPokemons: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pokemon" }],
 });
 
 //Signup function

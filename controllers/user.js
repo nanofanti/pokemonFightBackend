@@ -59,7 +59,8 @@ const updateUserPokemons = async (req, res) => {
       id,
       { userPokemons },
       { new: true }
-    );
+    ).populate("userPokemons");
+
     if (!user) {
       res.status(404).json({ message: "I don't know this user" });
     } else {
